@@ -2,6 +2,9 @@
     padding: 2px 2px 2px 0;
     background-color: green;
 }
+.magic-scroll .scrolling > * {
+    pointer-events: none;
+}
 
 .magic-scroll *::-webkit-scrollbar {
     width: 6px;

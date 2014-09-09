@@ -10,7 +10,6 @@
             console.log('WTF Bro! Give me selector!');
         } else {
             this.elements = document.querySelectorAll(selector);
-            active = false;
         }
 
         return this;
@@ -24,22 +23,26 @@
             if(!element.magicScroll) {
                 element.magicScroll = true;
 
-                element.addEventListener('mouseup', this._unactive);
-                element.addEventListener('mousedown', this._active);
-                element.addEventListener('mouseleave', this._unactive);
-                element.addEventListener('mousemove', this._move, false);
+                element.addEventListener('mousedown', this._start);
+                element.addEventListener('mouseup', this._stop);
+                element.addEventListener('mouseleave', this._stop);
+                element.addEventListener('mousemove', this._move);
             }
         }
 
         return this;
     };
 
-    MagicScroll.prototype._active = function(event) {
+    MagicScroll.prototype._start = function(e) {
         active = true;
+
+        e.currentTarget.classList.add('scrolling');
     };
 
-    MagicScroll.prototype._unactive = function(event) {
+    MagicScroll.prototype._stop = function(e) {
         active = false;
+
+        e.currentTarget.classList.remove('scrolling');
     };
 
     MagicScroll.prototype._move = function(event) {
@@ -61,9 +64,9 @@
             var element = this.elements[i];
 
             if(element.magicScroll) {
-                element.removeEventListener('mouseup', this._unactive);
-                element.removeEventListener('mousedown', this._active);
-                element.removeEventListener('mouseleave', this._unactive);
+                element.removeEventListener('mousedown', this._start);
+                element.removeEventListener('mouseup', this._stop);
+                element.removeEventListener('mouseleave', this._stop);
                 element.removeEventListener('mousemove', this._move);
 
                 delete element.magicScroll;

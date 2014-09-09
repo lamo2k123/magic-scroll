@@ -20,6 +20,20 @@
             height: 2000px;
             padding: 10px;
         }
+
+        #scroll span {
+            display: block;
+            height: 40px;
+            width: 40px;
+            background-color: red;
+            margin: 5px;
+            float: left;
+        }
+
+        #scroll span:hover {
+            background-color: yellow;
+        }
+
     </style>
 
 </head>
@@ -27,9 +41,19 @@
 
 <div class="magic-scroll">
     <div id="scroll">
-        <div class="here"></div>
+        <div class="here">
+        </div>
     </div>
 </div>
+
+<script>
+    var here = document.getElementsByClassName('here')[0];
+
+    for(var i = 0; i < 10000; i++)
+        here.appendChild(document.createElement('span'));
+
+    MagicScroll('#scroll').create();
+</script>
 
 </body>
 </html>
