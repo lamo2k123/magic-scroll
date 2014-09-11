@@ -1,5 +1,6 @@
 (function(){
-    var active = false;
+
+    var active = scrolling = false;
 
     var MagicScroll = function(selector, options) {
         if(!(this instanceof MagicScroll)) {
@@ -35,27 +36,32 @@
 
     MagicScroll.prototype._start = function(e) {
         active = true;
-
-        e.currentTarget.classList.add('scrolling');
     };
 
     MagicScroll.prototype._stop = function(e) {
         active = false;
 
         e.currentTarget.classList.remove('scrolling');
+        scrolling = false;
     };
 
     MagicScroll.prototype._move = function(event) {
         if(active) {
             event && event.preventDefault();
 
-            var mY = (event.movementY) ? event.movementY : event.webkitMovementY;
+            var $current= event.currentTarget,
+                mY      = (event.movementY) ? event.movementY : event.webkitMovementY;
+
+            if(!scrolling) {
+                $current.classList.add('scrolling');
+                scrolling = true;
+            }
 
             if(mY > 0) {
-                event.currentTarget.scrollTop -= Math.abs(mY * 2);
+                $current.scrollTop -= Math.abs(mY * 2);
             }
             else if(mY < 0) {
-                event.currentTarget.scrollTop += Math.abs(mY * 2);
+                $current.scrollTop += Math.abs(mY * 2);
             }
 
         }
