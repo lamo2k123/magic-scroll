@@ -49,11 +49,13 @@
         if(active) {
             event && event.preventDefault();
 
-            if(event.movementY > 0) {
-                event.currentTarget.scrollTop -= Math.abs(event.movementY * 2);
+            var mY = (event.movementY) ? event.movementY : event.webkitMovementY;
+
+            if(mY > 0) {
+                event.currentTarget.scrollTop -= Math.abs(mY * 2);
             }
-            else if(event.movementY < 0) {
-                event.currentTarget.scrollTop += Math.abs(event.movementY * 2);
+            else if(mY < 0) {
+                event.currentTarget.scrollTop += Math.abs(mY * 2);
             }
 
         }
